@@ -1,9 +1,12 @@
 package gr.kyrkosma.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -17,14 +20,22 @@ public class Transaction {
     private Integer transactionId;
 
     @Column(name = "amount")
-    private Integer amount;
+    private BigDecimal amount;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "account_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Account account;
 
-    public Transaction(Integer amount, Account account) {
+    @Column(name = "account_id")
+    private Integer accountId;
+
+    public Transaction(BigDecimal amount) {
         this.amount = amount;
-        this.account = account;
+    }
+
+    public Transaction(BigDecimal amount, Integer accountId) {
+        this.amount = amount;
+        this.accountId = accountId;
     }
 }
