@@ -1,9 +1,13 @@
 package gr.kyrkosma.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,9 +24,20 @@ public class Customer {
     private String lastName;
     @Column(name = "first_name")
     private String firstName;
+    @Column(name = "social_security_number")
+    private String socialSecurityNumber;
 
-    public Customer(String lastName, String firstName) {
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<Account> accountList = new ArrayList<>();
+
+    public Customer(String lastName, String firstName, String socialSecurityNumber) {
         this.lastName = lastName;
         this.firstName = firstName;
+        this.socialSecurityNumber = socialSecurityNumber;
     }
 }

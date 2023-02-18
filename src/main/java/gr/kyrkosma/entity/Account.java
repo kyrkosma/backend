@@ -1,9 +1,16 @@
 package gr.kyrkosma.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import gr.kyrkosma.enums.AccountType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,14 +24,30 @@ public class Account {
     private Integer accountId;
 
     @Column(name = "balance")
-    private Integer balance;
+    private BigDecimal balance;
+    @Column(name = "account_type")
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Customer customer;
 
-    public Account(Integer balance, Customer customer) {
+    @Column(name = "customer_id")
+    private Integer customerId;
+
+    @OneToMany(
+            mappedBy = "account",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
+    private List<Transaction> transactionList = new ArrayList<>();
+
+    public Account(BigDecimal balance, AccountType accountType, Integer customerId) {
         this.balance = balance;
-        this.customer = customer;
+        this.accountType = accountType;
+        this.customerId = customerId;
     }
 }
