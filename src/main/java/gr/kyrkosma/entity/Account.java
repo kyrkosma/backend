@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import gr.kyrkosma.enums.AccountType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +25,8 @@ public class Account {
     @Column(name = "account_id")
     private Integer accountId;
 
+    @NotNull
+    @Min(1)
     @Column(name = "balance")
     private BigDecimal balance;
     @Column(name = "account_type")
@@ -34,6 +38,7 @@ public class Account {
     @JsonBackReference
     private Customer customer;
 
+    @NotNull
     @Column(name = "customer_id")
     private Integer customerId;
 
@@ -50,4 +55,5 @@ public class Account {
         this.accountType = accountType;
         this.customerId = customerId;
     }
+
 }

@@ -2,6 +2,7 @@ package gr.kyrkosma.converter;
 
 import gr.kyrkosma.dto.AccountDTO;
 import gr.kyrkosma.entity.Account;
+import gr.kyrkosma.form.AccountCreationForm;
 import gr.kyrkosma.form.AccountForm;
 
 import java.util.ArrayList;
@@ -28,5 +29,9 @@ public class AccountConverter {
 
     public static Account convertAccountFormToAccount(AccountForm accountForm) {
         return new Account(accountForm.getBalance(), accountForm.getAccountType(), accountForm.getCustomerId());
+    }
+
+    public static Account convertAccountCreationFormToAccount(AccountCreationForm accountCreationForm) {
+        return new Account(accountCreationForm.getInitialCredit(), accountCreationForm.getAccountType(), accountCreationForm.getCustomerID());
     }
 }

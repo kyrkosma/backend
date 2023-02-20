@@ -1,6 +1,5 @@
 package gr.kyrkosma.controller;
 
-import gr.kyrkosma.converter.AccountConverter;
 import gr.kyrkosma.dto.AccountDTO;
 import gr.kyrkosma.form.AccountCreationForm;
 import gr.kyrkosma.form.AccountForm;
@@ -19,16 +18,16 @@ public class AccountController {
 
     @GetMapping("/accounts")
     public List<AccountDTO> fetchAccountList() {
-        return AccountConverter.convertAccountListToAccountDTOList(accountService.fetchAccountList());
+        return accountService.fetchAccountList();
     }
 
     @PostMapping("/accounts")
-    public AccountDTO saveAccount(@Valid @RequestBody AccountForm accountForm) {
-        return accountService.saveAccount(accountForm);
+    public AccountDTO saveAccount(@Valid @RequestBody AccountCreationForm accountCreationForm) {
+        return accountService.saveAccount(accountCreationForm);
     }
 
     @PutMapping("/accounts/{id}")
-    public AccountDTO updateAccount(@RequestBody AccountForm accountForm, @PathVariable("id") Integer accountId) {
+    public AccountDTO updateAccount(@Valid @RequestBody AccountForm accountForm, @PathVariable("id") Integer accountId) {
         return accountService.updateAccount(accountForm, accountId);
     }
 
@@ -36,11 +35,6 @@ public class AccountController {
     public String deleteAccountById(@PathVariable("id") Integer accountId) {
         accountService.deleteAccountById(accountId);
         return "Deleted Successfully";
-    }
-
-    @PostMapping(value = "/accounts/new")
-    public AccountDTO openCustomerAccount(@RequestBody AccountCreationForm accountCreationForm) {
-        return accountService.openAccount(accountCreationForm);
     }
 
 }

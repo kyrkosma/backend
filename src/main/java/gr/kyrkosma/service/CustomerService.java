@@ -10,7 +10,9 @@ public interface CustomerService {
 
     List<CustomerDTO> fetchCustomerList();
 
-    CustomerDTO updateCustomer(CustomerDTO customerDTO, Integer customerId);
+    CustomerDTO updateCustomer(CustomerForm customerForm, Integer customerId);
 
     void deleteCustomerById(Integer customerId);
+
+    CustomerDTO getcustomerById(Integer customerId);
 }
