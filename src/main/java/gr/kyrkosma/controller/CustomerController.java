@@ -24,14 +24,19 @@ public class CustomerController {
         return customerService.fetchCustomerList();
     }
 
+    @GetMapping("/customers/{id}")
+    public CustomerDTO fetchCustomerList(@PathVariable("id") Integer customerId) {
+        return customerService.getcustomerById(customerId);
+    }
+
     @PostMapping("/customers")
     public CustomerDTO saveCustomer(@Valid @RequestBody CustomerForm customerForm) {
         return customerService.saveCustomer(customerForm);
     }
 
     @PutMapping("/customers/{id}")
-    public CustomerDTO updateCustomer(@RequestBody CustomerDTO customer, @PathVariable("id") Integer customerId) {
-        return customerService.updateCustomer(customer, customerId);
+    public CustomerDTO updateCustomer(@Valid @RequestBody CustomerForm customerForm, @PathVariable("id") Integer customerId) {
+        return customerService.updateCustomer(customerForm, customerId);
     }
 
     @DeleteMapping("/customers/{id}")

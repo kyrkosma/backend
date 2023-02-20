@@ -4,7 +4,6 @@ import gr.kyrkosma.converter.AccountConverter;
 import gr.kyrkosma.dto.AccountDTO;
 import gr.kyrkosma.entity.Account;
 import gr.kyrkosma.entity.Transaction;
-import gr.kyrkosma.enums.AccountType;
 import gr.kyrkosma.form.AccountCreationForm;
 import gr.kyrkosma.form.AccountForm;
 import gr.kyrkosma.repository.AccountRepository;
@@ -25,15 +24,30 @@ public class AccountServiceImpl implements AccountService {
     private final CustomerRepository customerRepository;
     private final TransactionRepository transactionRepository;
 
+
     @Override
-    public AccountDTO saveAccount(AccountForm accountForm) {
-        Account newAccount = AccountConverter.convertAccountFormToAccount(accountForm);
+    public AccountDTO saveAccount(AccountCreationForm accountCreationForm) {
+
+        Account account = new Account();
+        account.setBalance(accountCreationForm.getInitialCredit());
+        account.setAccountType(accountCreationForm.getAccountType());
+        account.setCustomerId(accountCreationForm.getCustomerID());
+
+        Account accountCreated = accountRepository.save(account);
+
+        if (BigDecimal.valueOf(0).compareTo(accountCreationForm.getInitialCredit()) < 0) {
+            Transaction transaction = new Transaction(accountCreationForm.getInitialCredit());
+            transaction.setAccountId(accountCreated.getAccountId());
+            transactionRepository.save(transaction);
+        }
+
+        Account newAccount = AccountConverter.convertAccountCreationFormToAccount(accountCreationForm);
         return AccountConverter.convertAccountToAccountDTO(accountRepository.save(newAccount));
     }
 
     @Override
-    public List<Account> fetchAccountList() {
-        return accountRepository.findAll();
+    public List<AccountDTO> fetchAccountList() {
+        return AccountConverter.convertAccountListToAccountDTOList(accountRepository.findAll());
     }
 
     @Override
@@ -47,24 +61,5 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAccountById(Integer accountId) {
         accountRepository.deleteById(accountId);
-    }
-
-    @Override
-    public AccountDTO openAccount(AccountCreationForm accountCreationForm) {
-
-        Account account = new Account();
-        account.setBalance(accountCreationForm.getInitialCredit());
-        account.setAccountType(AccountType.SAVINGS);
-        account.setCustomerId(accountCreationForm.getCustomerID());
-
-        Account accountCreated = accountRepository.save(account);
-
-        if (!accountCreationForm.getInitialCredit().equals(BigDecimal.ZERO)) {
-            Transaction transaction = new Transaction(accountCreationForm.getInitialCredit());
-            transaction.setAccountId(accountCreated.getAccountId());
-            transactionRepository.save(transaction);
-        }
-
-        return AccountConverter.convertAccountToAccountDTO(accountCreated);
     }
 }

@@ -26,7 +26,7 @@ public class TransactionController {
     }
 
     @PutMapping("/transactions/{id}")
-    public TransactionDTO updateTransaction(@RequestBody TransactionForm transactionForm, @PathVariable("id") Integer transactionId) {
+    public TransactionDTO updateTransaction(@Valid @RequestBody TransactionForm transactionForm, @PathVariable("id") Integer transactionId) {
         return transactionService.updateTransaction(transactionForm, transactionId);
     }
 

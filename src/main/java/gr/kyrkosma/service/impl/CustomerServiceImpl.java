@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,16 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO updateCustomer(CustomerDTO customerDTO, Integer customerId) {
+    public CustomerDTO updateCustomer(CustomerForm customerForm, Integer customerId) {
         Customer cust = customerRepository.findCustomerByCustomerId(customerId).orElseThrow(() -> new IllegalStateException("customer not found"));
 
-        if (Objects.nonNull(customerDTO.getLastName()) && !"".equalsIgnoreCase(customerDTO.getLastName())) {
-            cust.setLastName(customerDTO.getLastName());
-        }
+        cust.setLastName(customerForm.getLastName());
 
-        if (Objects.nonNull(customerDTO.getFirstName()) && !"".equalsIgnoreCase(customerDTO.getFirstName())) {
-            cust.setFirstName(customerDTO.getFirstName());
-        }
+        cust.setFirstName(customerForm.getFirstName());
 
         return CustomerConverter.convertCustomerToCustomerDTO(customerRepository.save(cust));
     }
@@ -49,4 +44,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(customerId);
     }
 
+    @Override
+    public CustomerDTO getcustomerById(Integer customerId) {
+        Customer customer = customerRepository.findCustomerByCustomerId(customerId).orElseThrow(() -> new IllegalStateException("customer not found"));
+        return CustomerConverter.convertCustomerToCustomerDTO(customer);
+    }
 }
