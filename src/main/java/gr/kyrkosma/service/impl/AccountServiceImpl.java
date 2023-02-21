@@ -4,6 +4,7 @@ import gr.kyrkosma.converter.AccountConverter;
 import gr.kyrkosma.dto.AccountDTO;
 import gr.kyrkosma.entity.Account;
 import gr.kyrkosma.entity.Transaction;
+import gr.kyrkosma.exception.AccountBalanceIsNegativeException;
 import gr.kyrkosma.form.AccountCreationForm;
 import gr.kyrkosma.form.AccountForm;
 import gr.kyrkosma.repository.AccountRepository;
@@ -28,6 +29,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO saveAccount(AccountCreationForm accountCreationForm) {
 
+        if (BigDecimal.valueOf(0).compareTo(accountCreationForm.getInitialCredit()) > 0) {
+            throw new AccountBalanceIsNegativeException();
+        }
+
         Account account = new Account();
         account.setBalance(accountCreationForm.getInitialCredit());
         account.setAccountType(accountCreationForm.getAccountType());
@@ -41,8 +46,7 @@ public class AccountServiceImpl implements AccountService {
             transactionRepository.save(transaction);
         }
 
-        Account newAccount = AccountConverter.convertAccountCreationFormToAccount(accountCreationForm);
-        return AccountConverter.convertAccountToAccountDTO(accountRepository.save(newAccount));
+        return AccountConverter.convertAccountToAccountDTO(accountCreated);
     }
 
     @Override

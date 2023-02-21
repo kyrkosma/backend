@@ -3,12 +3,14 @@ package gr.kyrkosma.service.impl;
 import gr.kyrkosma.converter.TransactionConverter;
 import gr.kyrkosma.dto.TransactionDTO;
 import gr.kyrkosma.entity.Transaction;
+import gr.kyrkosma.exception.TransactionAmountIsZeroException;
 import gr.kyrkosma.form.TransactionForm;
 import gr.kyrkosma.repository.TransactionRepository;
 import gr.kyrkosma.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,6 +21,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDTO saveTransaction(TransactionForm transactionForm) {
+        if (BigDecimal.valueOf(0).equals(transactionForm.getAmount())) {
+            throw new TransactionAmountIsZeroException();
+        }
         Transaction newTransaction = TransactionConverter.convertTransactionFormToTransaction(transactionForm);
         return TransactionConverter.convertTransactionToTransactionDTO(transactionRepository.save(newTransaction));
     }
