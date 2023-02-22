@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public AccountDTO saveAccount(AccountCreationForm accountCreationForm) {
+    public AccountDTO saveAccount(AccountCreationForm accountCreationForm) throws AccountBalanceIsNegativeException {
 
         if (BigDecimal.valueOf(0).compareTo(accountCreationForm.getInitialCredit()) > 0) {
             throw new AccountBalanceIsNegativeException();

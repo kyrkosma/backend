@@ -1,6 +1,7 @@
 package gr.kyrkosma.controller;
 
 import gr.kyrkosma.dto.TransactionDTO;
+import gr.kyrkosma.exception.TransactionAmountIsZeroException;
 import gr.kyrkosma.form.TransactionForm;
 import gr.kyrkosma.service.TransactionService;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ public class TransactionController {
     }
 
     @PostMapping("/transactions")
-    public TransactionDTO saveTransaction(@Valid @RequestBody TransactionForm transactionForm) {
+    public TransactionDTO saveTransaction(@Valid @RequestBody TransactionForm transactionForm) throws TransactionAmountIsZeroException {
         return transactionService.saveTransaction(transactionForm);
     }
 

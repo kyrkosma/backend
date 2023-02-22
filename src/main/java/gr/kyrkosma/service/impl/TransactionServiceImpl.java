@@ -20,7 +20,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
 
     @Override
-    public TransactionDTO saveTransaction(TransactionForm transactionForm) {
+    public TransactionDTO saveTransaction(TransactionForm transactionForm) throws TransactionAmountIsZeroException {
         if (BigDecimal.valueOf(0).equals(transactionForm.getAmount())) {
             throw new TransactionAmountIsZeroException();
         }
