@@ -26,6 +26,17 @@ public class AccountServiceImpl implements AccountService {
     private final TransactionRepository transactionRepository;
 
 
+    /**
+     * This method creates an account in the Database. If the
+     * initialCredit of the accountCreationForm is of negative value,
+     * the {@link AccountBalanceIsNegativeException} will be thrown. If initialCredit
+     * is zero, an account will be created. If initialCredit is of positive value
+     * apart from creating an account, a transaction will be created with the amount
+     * of initialCredit.
+     *
+     * @param accountCreationForm account to be saved.
+     * @return account with the details we want.
+     */
     @Override
     public AccountDTO saveAccount(AccountCreationForm accountCreationForm) throws AccountBalanceIsNegativeException {
 
