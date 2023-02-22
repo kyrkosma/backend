@@ -15,7 +15,7 @@ public class TransactionResponseEntityExceptionHandler extends ResponseEntityExc
 
     //An example of how to handle a custom exception
     @ExceptionHandler(value = {TransactionAmountIsZeroException.class})
-    protected ResponseEntity<Object> handleZeroAmount(RuntimeException ex, WebRequest request) {
+    protected ResponseEntity<Object> handleZeroAmount(Exception ex, WebRequest request) {
 
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
