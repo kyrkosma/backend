@@ -3,6 +3,7 @@ package gr.kyrkosma.service.impl;
 import gr.kyrkosma.dto.AccountDTO;
 import gr.kyrkosma.entity.Account;
 import gr.kyrkosma.enums.AccountType;
+import gr.kyrkosma.exception.AccountBalanceIsNegativeException;
 import gr.kyrkosma.form.AccountCreationForm;
 import gr.kyrkosma.form.AccountForm;
 import gr.kyrkosma.repository.AccountRepository;
@@ -31,7 +32,7 @@ class AccountServiceImplTest {
     private AccountRepository accountRepository;
 
     @Test
-    void test_whenAccountIsSaved_thenAccountDTOIsReturned() {
+    void test_whenAccountIsSaved_thenAccountDTOIsReturned() throws AccountBalanceIsNegativeException {
 
         Account account = new Account(BigDecimal.valueOf(1000), AccountType.INVESTMENT, 2);
         account.setAccountId(1);

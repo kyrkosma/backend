@@ -2,6 +2,7 @@ package gr.kyrkosma.service.impl;
 
 import gr.kyrkosma.dto.TransactionDTO;
 import gr.kyrkosma.entity.Transaction;
+import gr.kyrkosma.exception.TransactionAmountIsZeroException;
 import gr.kyrkosma.form.TransactionForm;
 import gr.kyrkosma.repository.TransactionRepository;
 import gr.kyrkosma.service.TransactionService;
@@ -30,7 +31,7 @@ class TransactionServiceImplTest {
     private TransactionRepository transactionRepository;
 
     @Test
-    void test_whenTransactionIsSaved_thenTransactionDTOIsReturned() {
+    void test_whenTransactionIsSaved_thenTransactionDTOIsReturned() throws TransactionAmountIsZeroException {
 
         Transaction transaction = new Transaction(BigDecimal.valueOf(5000), 1);
         transaction.setTransactionId(1);

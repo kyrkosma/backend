@@ -26,7 +26,7 @@ public class Account {
     private Integer accountId;
 
     @NotNull
-    @Min(1)
+    @Min(0)
     @Column(name = "balance")
     private BigDecimal balance;
     @Column(name = "account_type")
