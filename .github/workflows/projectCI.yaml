@@ -2,8 +2,8 @@ name: Java CI
 
 on:
   pull-request:
-    branches: 
-     - 'develop'
+    branches:
+      - 'develop'
 
 jobs:
   build:
@@ -16,10 +16,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-		  
+
       - name: Run Maven Tests
         run: mvn clean test
-        
+
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.3
