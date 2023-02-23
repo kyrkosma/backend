@@ -22,4 +22,14 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, exceptionResponse, new HttpHeaders(), httpStatus, request);
     }
 
+    @ExceptionHandler(value = {IllegalStateException.class})
+    protected ResponseEntity<Object> handleIllegalStateException(Exception ex, WebRequest request) {
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(httpStatus.value(), ex.getMessage(), System.currentTimeMillis());
+
+        return handleExceptionInternal(ex, exceptionResponse, new HttpHeaders(), httpStatus, request);
+    }
+
 }

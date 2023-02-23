@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO getcustomerById(Integer customerId) {
-        Customer customer = customerRepository.findCustomerByCustomerId(customerId).orElseThrow(() -> new IllegalStateException("customer not found"));
+        Customer customer = customerRepository.findCustomerByCustomerId(customerId).orElseThrow(() -> new IllegalStateException("Customer not found."));
         return CustomerConverter.convertCustomerToCustomerDTO(customer);
     }
 }

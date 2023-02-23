@@ -22,7 +22,7 @@ $('#searchBtn').on('click', function () {
                 "Customer Name: " + result.lastName + " " + result.firstName +
                 "</h6>" +
                 "<br>" +
-                "<h6>*Click on the account on the right to see transactions</h6>" +
+                "<h6>*Click on the account to see transactions</h6>" +
                 "</div>" +
                 "<br>");
 
