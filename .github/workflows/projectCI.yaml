@@ -1,7 +1,7 @@
 name: Java CI
 
 on:
-  pull-request:
+  push:
     branches:
       - 'develop'
 
