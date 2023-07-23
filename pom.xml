@@ -13,6 +13,7 @@
     <groupId>gr.kyrkosma</groupId>
     <artifactId>backend</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <spring.boot.version>3.0.2</spring.boot.version>
@@ -109,6 +110,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>gr.kyrkosma.BackendApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
             </plugin>
         </plugins>
     </build>
