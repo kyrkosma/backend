@@ -32,6 +32,14 @@ mvn test
 
 A JaCoCo report is available under %PROJECT_DIR%\target\site\jacoco\
 
+## How to run as Docker container
+
+Requires Docker installation
+```
+docker build -t kyrkosma/backend .
+docker run -p 8080:8080 kyrkosma/backend
+```
+
 ## Help
 
 On startup, three customers are created. You can find the scripts under %PROJECT_DIR%\src\main\resources\data.sql
