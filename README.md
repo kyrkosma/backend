@@ -22,7 +22,7 @@ cd .\backend-main\
 mvn spring-boot:run
 ```
 
-* Open browser and navigate to http://localhost:8080/
+* Open browser and navigate to https://localhost:8080/
 
 ## How to test the application
 
@@ -46,7 +46,7 @@ On startup, three customers are created. You can find the scripts under %PROJECT
 
 The front-end shows just a subset of the API's functionalities.
 
-You can find the whole suite of endpoints at http://localhost:8080/swagger-ui/index.html.
+You can find the whole suite of endpoints at https://localhost:8080/swagger-ui/index.html.
 
 You can also import all available requests using Postman. Just import file
 %PROJECT_DIR%\postman\BACKEND.postman_collection.json.
